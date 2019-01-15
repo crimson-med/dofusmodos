@@ -3,4 +3,5 @@ export interface IModo {
   server: string;
   lastpos: string;
   evt: string;
+  heure: Date;
 }

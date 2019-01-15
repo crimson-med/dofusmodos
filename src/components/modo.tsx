@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 import { IModo } from "../models/IModo";
+import { Table, Loader, Dimmer } from "semantic-ui-react";
 
 const query = gql`
   {
@@ -10,29 +11,53 @@ const query = gql`
       server
       lastpos
       evt
+      heure
     }
   }
 `;
 
 const Modo: FunctionComponent = props => {
   return (
-    <div>
-      <Query query={query}>
-        {result => {
-          if (result.loading) return <p>loading...</p>;
-          if (result.error) return <p>{result.error.message}</p>;
+    <Query query={query}>
+      {result => {
+        if (result.loading)
           return (
-            <ul>
-              {(result.data.modos as IModo[]).map((m, k) => (
-                <li key={k}>
-                  {m.server + " " + m.nom + " " + m.lastpos + " " + m.evt}
-                </li>
-              ))}
-            </ul>
+            <Dimmer active inverted>
+              <Loader content="Loading" />
+            </Dimmer>
           );
-        }}
-      </Query>
-    </div>
+        if (result.error)
+          return (
+            <Dimmer active inverted>
+              <Loader inverted content="Failed to fetch data" />
+            </Dimmer>
+          );
+        return (
+          <Table celled>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Nom du modérateur</Table.HeaderCell>
+                <Table.HeaderCell>Serveur</Table.HeaderCell>
+                <Table.HeaderCell>Dernière position</Table.HeaderCell>
+                <Table.HeaderCell>Action</Table.HeaderCell>
+                <Table.HeaderCell>Heure</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {(result.data.modos as IModo[]).map((m, k) => (
+                <Table.Row key={k}>
+                  <Table.Cell>{m.server}</Table.Cell>
+                  <Table.Cell>{m.nom}</Table.Cell>
+                  <Table.Cell>{m.lastpos}</Table.Cell>
+                  <Table.Cell>{m.evt}</Table.Cell>
+                  <Table.Cell>{m.heure}</Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
+        );
+      }}
+    </Query>
   );
 };
 
