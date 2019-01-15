@@ -7,7 +7,7 @@ import Modo from "./components/modo";
 import ApolloClient, { gql } from "apollo-boost";
 import { propTypes } from "react-recaptcha";
 
-const client = new ApolloClient({
+/*const client = new ApolloClient({
   uri: "http://localhost:4000/graphql"
 });
 
@@ -33,12 +33,12 @@ function validForm(): string {
   `;
 
   return "";
-}
+}*/
 
 const App: FunctionComponent = props => {
   return (
     <div className="App">
-      <Form action={validForm()} size="tiny">
+      <Form size="tiny">
         <Image centered src="./img/modo.png" size="small" />
         <Grid centered columns={1}>
           <Grid.Column floated="left" width={6}>
