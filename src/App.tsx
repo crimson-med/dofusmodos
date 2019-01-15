@@ -28,8 +28,8 @@ const App: FunctionComponent = props => {
               <label>Action</label>
               <Input placeholder="Ban/Mute..." />
             </Form.Field>
-            <ReCAPTCHA sitekey="6Le24YkUAAAAAPDiehfRMWwNeBhg-WFg3ii0Xltr" />
             <Button type="submit">Partager</Button>
+            <ReCAPTCHA sitekey="6Ldp44kUAAAAAGmacWivKV8_xX0GJaH0RkzOy4QW" />
           </Grid.Column>
         </Grid>
       </Form>
