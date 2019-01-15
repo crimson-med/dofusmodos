@@ -71,8 +71,9 @@ const App: FunctionComponent = props => {
               return;
             }
             const recaptchaValue = recaptchaRef.current!.getValue();
+            console.log(recaptchaValue);
             if (!recaptchaValue) {
-              console.log("need cap");
+              console.log("need cap 2 ", recaptchaValue);
               return;
             }
             addModo({
