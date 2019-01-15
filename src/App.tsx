@@ -67,10 +67,12 @@ const App: FunctionComponent = props => {
               !recaptchaRef ||
               (recaptchaRef && recaptchaRef.current != null)
             ) {
+              console.log("need cap");
               return;
             }
             const recaptchaValue = recaptchaRef.current!.getValue();
             if (!recaptchaValue) {
+              console.log("need cap");
               return;
             }
             addModo({
@@ -78,6 +80,7 @@ const App: FunctionComponent = props => {
                 type: { nom: nom, server: serv, lastpos: pos, evt: action }
               }
             });
+            console.log("ok");
           }}
           size="tiny"
         >
