@@ -5,9 +5,9 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-// oui
+
 const client = new ApolloClient({
-  uri: process.env.LINK_MODO
+  uri: "http://ec2-54-213-172-216.us-west-2.compute.amazonaws.com:4000/graphql"
 });
 
 ReactDOM.render(
