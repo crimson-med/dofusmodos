@@ -67,12 +67,12 @@ const App: FunctionComponent = props => {
               !recaptchaRef ||
               (recaptchaRef && recaptchaRef.current != null)
             ) {
-              console.log("need cap");
+              console.log("need cap 1", recaptchaRef);
               return;
             }
             const recaptchaValue = recaptchaRef.current!.getValue();
             if (!recaptchaValue) {
-              console.log("need cap");
+              console.log("need cap 2",recaptchaRef);
               return;
             }
             addModo({
