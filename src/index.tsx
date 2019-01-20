@@ -5,7 +5,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-
+// oui
 const client = new ApolloClient({
   uri: process.env.LINK_MODO
 });
