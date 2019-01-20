@@ -65,7 +65,7 @@ const App: FunctionComponent = props => {
             e.preventDefault();
             if (
               !recaptchaRef ||
-              (recaptchaRef && recaptchaRef.current != null)
+              (recaptchaRef && !recaptchaRef.current)
             ) {
               console.log("need cap 1", recaptchaRef);
               return;
