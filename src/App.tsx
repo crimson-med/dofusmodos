@@ -75,7 +75,6 @@ const App: FunctionComponent = props => {
               !recaptchaRef ||
               (recaptchaRef && !recaptchaRef.current)
             ) {
-              console.log("need cap 1", recaptchaRef);
               return;
             }
             const recaptchaValue = recaptchaRef.current!.getValue();
@@ -88,14 +87,20 @@ const App: FunctionComponent = props => {
                 type: { nom: nom, server: serv, lastpos: pos, evt: action }
               }
             });
-            console.log("ok");
           }}
           size="tiny"
         >
           <Image centered src="img/modo.png" size="small" />
 
           <Grid centered columns={1}>
-               <Confirm size="mini" cancelButton="OK" content="Veuillez vérifier le captcha" open={open} onCancel={cloze} onConfirm={cloze} />
+            <Confirm
+              size="mini"
+              cancelButton="OK"
+              content="Veuillez vérifier le captcha"
+              open={open}
+              onCancel={cloze}
+              onConfirm={cloze}
+            />
             <Grid.Column floated="left" width={6}>
               <Form.Input
                 onChange={nomChange}
@@ -136,7 +141,7 @@ const App: FunctionComponent = props => {
               </Grid>
             </Grid.Column>
             <Grid.Column floated="right" width={10}>
-              <Modo />
+              <Modo addModo={data && data.addModo} />
             </Grid.Column>
           </Grid>
         </Form>
