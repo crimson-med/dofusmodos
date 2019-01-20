@@ -5,8 +5,9 @@ import {
   Image,
   Button,
   Grid,
-  Input,
-  InputOnChangeData
+  Confirm,
+  InputOnChangeData,
+  ConfirmProps
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -31,6 +32,7 @@ const App: FunctionComponent = props => {
   const [serv, setServ] = useState("");
   const [action, setAction] = useState("");
   const [pos, setPos] = useState("");
+  const [open, setOpen] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const nomChange = (
@@ -57,6 +59,12 @@ const App: FunctionComponent = props => {
   ) => {
     setPos(data.value);
   };
+  const cloze = (
+    evt: React.MouseEvent<HTMLAnchorElement>,
+    data: ConfirmProps
+  ) => {
+    setOpen(false);
+  };
   return (
     <Mutation mutation={addModoGql}>
       {(addModo, { data }) => (
@@ -72,7 +80,7 @@ const App: FunctionComponent = props => {
             }
             const recaptchaValue = recaptchaRef.current!.getValue();
             if (!recaptchaValue) {
-              console.log("need cap 2",recaptchaRef);
+              setOpen(true);
               return;
             }
             addModo({
@@ -87,6 +95,7 @@ const App: FunctionComponent = props => {
           <Image centered src="img/modo.png" size="small" />
 
           <Grid centered columns={1}>
+               <Confirm size="mini" cancelButton="OK" content="Veuillez vérifier le captcha" open={open} onCancel={cloze} onConfirm={cloze} />
             <Grid.Column floated="left" width={6}>
               <Form.Input
                 onChange={nomChange}
