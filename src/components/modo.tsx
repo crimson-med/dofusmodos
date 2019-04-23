@@ -67,7 +67,7 @@ const Modo: FunctionComponent<IModoProps> = props => {
                   <Table.Cell>{props.addModo.nom}</Table.Cell>
                   <Table.Cell>{props.addModo.lastpos}</Table.Cell>
                   <Table.Cell>{props.addModo.evt}</Table.Cell>
-                  <Table.Cell>{props.addModo.heure}</Table.Cell>
+                  <Table.Cell>{moment(props.addModo.heure).fromNow()}</Table.Cell>
                 </Table.Row>
               )}
             </Table.Body>
