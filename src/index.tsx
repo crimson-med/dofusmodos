@@ -7,7 +7,7 @@ import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_URI
+  uri: "https://cookie-project.com:5050/graphql"
 });
 
 ReactDOM.render(
