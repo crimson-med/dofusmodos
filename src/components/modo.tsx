@@ -1,9 +1,12 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 import { IModo } from "../models/IModo";
 import { Table, Loader, Dimmer } from "semantic-ui-react";
+import moment from "moment";
+import "moment/locale/fr";
 
+moment.locale("fr");
 const query = gql`
   {
     modos {
@@ -17,7 +20,11 @@ const query = gql`
   }
 `;
 
-const Modo: FunctionComponent = props => {
+export interface IModoProps {
+  addModo?: IModo;
+}
+
+const Modo: FunctionComponent<IModoProps> = props => {
   return (
     <Query query={query}>
       {result => {
@@ -46,16 +53,37 @@ const Modo: FunctionComponent = props => {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {(result.data.modos as IModo[]).map((m, k) => (
-                <Table.Row key={k}>
-                  <Table.Cell>{m.nom}</Table.Cell>
-                  <Table.Cell>{m.server}</Table.Cell>
-                  <Table.Cell>{m.lastpos}</Table.Cell>
-                  <Table.Cell>{m.evt}</Table.Cell>
-                  <Table.Cell>{m.heure}</Table.Cell>
-                  <Table.Cell>{m.origin}</Table.Cell>
+              {(result.data.modos as IModo[])
+                .sort(
+                  (a, b) =>
+                    moment(b.heure)
+                      .toDate()
+                      .getTime() -
+                    moment(a.heure)
+                      .toDate()
+                      .getTime()
+                )
+                .map((m, k) => (
+                  <Table.Row key={k}>
+                    <Table.Cell>{m.nom}</Table.Cell>
+                    <Table.Cell>{m.server}</Table.Cell>
+                    <Table.Cell>{m.lastpos}</Table.Cell>
+                    <Table.Cell>{m.evt}</Table.Cell>
+                    <Table.Cell>{m.heure}</Table.Cell>
+                    <Table.Cell>{m.origin}</Table.Cell>
+                  </Table.Row>
+                ))}
+              {props.addModo && (
+                <Table.Row>
+                  <Table.Cell>{props.addModo.server}</Table.Cell>
+                  <Table.Cell>{props.addModo.nom}</Table.Cell>
+                  <Table.Cell>{props.addModo.lastpos}</Table.Cell>
+                  <Table.Cell>{props.addModo.evt}</Table.Cell>
+                  <Table.Cell>
+                    {moment(props.addModo.heure).fromNow()}
+                  </Table.Cell>
                 </Table.Row>
-              ))}
+              )}
             </Table.Body>
           </Table>
         );

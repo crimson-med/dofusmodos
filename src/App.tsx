@@ -6,7 +6,9 @@ import {
   Button,
   Grid,
   Dropdown,
-  InputOnChangeData
+  InputOnChangeData,
+  ConfirmProps,
+  Confirm
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -187,6 +189,7 @@ const App: FunctionComponent = props => {
   const [serv, setServ] = useState("");
   const [action, setAction] = useState("");
   const [pos, setPos] = useState("");
+  const [open, setOpen] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const nomChange = (
@@ -213,16 +216,19 @@ const App: FunctionComponent = props => {
   ) => {
     setPos(data.value);
   };
+  const cloze = (
+    evt: React.MouseEvent<HTMLAnchorElement>,
+    data: ConfirmProps
+  ) => {
+    setOpen(false);
+  };
   return (
     <Mutation mutation={addModoGql}>
       {(addModo, { data }) => (
         <Form
           onSubmit={e => {
             e.preventDefault();
-            if (
-              !recaptchaRef ||
-              (recaptchaRef && recaptchaRef.current != null)
-            ) {
+            if (!recaptchaRef || (recaptchaRef && !recaptchaRef.current)) {
               //console.log("need cap");
               return;
             }
@@ -250,6 +256,14 @@ const App: FunctionComponent = props => {
           <Image centered src="img/modo.png" size="small" />
 
           <Grid centered columns={1}>
+            <Confirm
+              size="mini"
+              cancelButton="OK"
+              content="Veuillez vérifier le captcha"
+              open={open}
+              onCancel={cloze}
+              onConfirm={cloze}
+            />
             <Grid.Column floated="left" width={6}>
               <strong>
                 Modérateur
@@ -309,7 +323,7 @@ const App: FunctionComponent = props => {
               </Grid>
             </Grid.Column>
             <Grid.Column floated="right" width={10}>
-              <Modo />
+              <Modo addModo={data && data.addModo} />
             </Grid.Column>
           </Grid>
         </Form>
