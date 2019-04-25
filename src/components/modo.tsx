@@ -49,7 +49,7 @@ const Modo: FunctionComponent<IModoProps> = props => {
                 <Table.HeaderCell>Dernière position</Table.HeaderCell>
                 <Table.HeaderCell>Action</Table.HeaderCell>
                 <Table.HeaderCell>Heure</Table.HeaderCell>
-                <Table.HeaderCell>Origin</Table.HeaderCell>
+                <Table.HeaderCell>Origine</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -82,6 +82,7 @@ const Modo: FunctionComponent<IModoProps> = props => {
                   <Table.Cell>
                     {moment(props.addModo.heure).fromNow()}
                   </Table.Cell>
+                  <Table.Cell>{props.addModo.origin}</Table.Cell>
                 </Table.Row>
               )}
             </Table.Body>

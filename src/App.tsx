@@ -8,7 +8,8 @@ import {
   Dropdown,
   InputOnChangeData,
   ConfirmProps,
-  Confirm
+  Confirm,
+  DropdownProps
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -193,20 +194,20 @@ const App: FunctionComponent = props => {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const nomChange = (
-    evt: React.ChangeEvent<HTMLInputElement>,
-    data: InputOnChangeData
+    event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownProps
   ) => {
     setNom(data.value);
   };
   const servChange = (
-    evt: React.ChangeEvent<HTMLInputElement>,
-    data: InputOnChangeData
+    event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownProps
   ) => {
     setServ(data.value);
   };
   const actionChange = (
-    evt: React.ChangeEvent<HTMLInputElement>,
-    data: InputOnChangeData
+    event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownProps
   ) => {
     setAction(data.value);
   };
@@ -276,6 +277,7 @@ const App: FunctionComponent = props => {
                 search
                 selection
                 options={modoList}
+                onChange={nomChange}
               />
               <br />
               <strong>
@@ -288,6 +290,7 @@ const App: FunctionComponent = props => {
                 selection
                 required
                 options={serverList}
+                onChange={servChange}
               />
               <br />
               <strong>
@@ -300,6 +303,7 @@ const App: FunctionComponent = props => {
                 selection
                 required
                 options={actionList}
+                onChange={actionChange}
               />
               <br />
               <Form.Input
