@@ -44,7 +44,7 @@ const actionList = [
   {
     key: "OnMap",
     value: "OnMap",
-    text: "Sur une map"
+    text: "OnMap"
   },
   {
     key: "Mute",
