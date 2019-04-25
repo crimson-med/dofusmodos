@@ -5,7 +5,7 @@ import {
   Image,
   Button,
   Grid,
-  Input,
+  Dropdown,
   InputOnChangeData
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
@@ -22,9 +22,165 @@ const addModoGql = gql`
       evt
       lastpos
       heure
+      origin
     }
   }
 `;
+
+const actionList = [
+  {
+    key: "Ban",
+    value: "Ban",
+    text: "Ban"
+  },
+  {
+    key: "MP",
+    value: "MP",
+    text: "Message"
+  },
+  {
+    key: "OnMap",
+    value: "OnMap",
+    text: "Sur une map"
+  },
+  {
+    key: "Mute",
+    value: "Mute",
+    text: "Mute"
+  }
+];
+const modoList = [
+  {
+    key: "Myghal",
+    value: "Myghal",
+    text: "Myghal"
+  },
+  {
+    key: "Zesnow",
+    value: "Zesnow",
+    text: "Zesnow"
+  },
+  {
+    key: "Tiavos",
+    value: "Tiavos",
+    text: "Tiavos"
+  },
+  {
+    key: "Fiora",
+    value: "Fiora",
+    text: "Fiora"
+  },
+  {
+    key: "TobliK",
+    value: "TobliK",
+    text: "TobliK"
+  },
+  {
+    key: "Amun",
+    value: "Amun",
+    text: "Amun"
+  },
+  {
+    key: "Nyom",
+    value: "Nyom",
+    text: "Nyom"
+  },
+  {
+    key: "Flysthos",
+    value: "Flysthos",
+    text: "Flysthos"
+  },
+  {
+    key: "Fuhrgrim",
+    value: "Fuhrgrim",
+    text: "Fuhrgrim"
+  },
+  {
+    key: "Sionilam",
+    value: "Sionilam",
+    text: "Sionilam"
+  },
+  {
+    key: "Loalys",
+    value: "Loalys",
+    text: "Loalys"
+  },
+  {
+    key: "Aesylthia",
+    value: "Aesylthia",
+    text: "Aesylthia"
+  },
+  {
+    key: "Luzagal",
+    value: "Luzagal",
+    text: "Luzagal"
+  },
+  {
+    key: "Falgoryn",
+    value: "Falgoryn",
+    text: "Falgoryn"
+  },
+  {
+    key: "Luzark",
+    value: "Luzark",
+    text: "Luzark"
+  },
+  {
+    key: "Mibato",
+    value: "Mibato",
+    text: "Mibato"
+  },
+  {
+    key: "Archelisle",
+    value: "Archelisle",
+    text: "Archelisle"
+  }
+];
+
+const serverList = [
+  {
+    key: "Oshimo",
+    text: "Oshimo",
+    value: "Oshimo",
+    image:
+      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_403.png"
+  },
+  {
+    key: "Terra Cogita",
+    text: "Terra Cogita",
+    value: "Terra Cogita",
+    image:
+      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_404.png"
+  },
+  {
+    key: "Grandapan",
+    text: "Grandapan",
+    value: "Grandapan",
+    image:
+      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_401.png"
+  },
+  {
+    key: "Herdegrize",
+    text: "Herdegrize",
+    value: "Herdegrize",
+    image:
+      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_405.png"
+  },
+  {
+    key: "Brutas",
+    text: "Brutas",
+    value: "Brutas",
+    image:
+      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_407.png"
+  },
+  {
+    key: "Dodge",
+    text: "Dodge",
+    value: "Dodge",
+    image:
+      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_406.png"
+  }
+];
 
 const App: FunctionComponent = props => {
   const [nom, setNom] = useState("");
@@ -67,21 +223,27 @@ const App: FunctionComponent = props => {
               !recaptchaRef ||
               (recaptchaRef && recaptchaRef.current != null)
             ) {
-              console.log("need cap");
+              //console.log("need cap");
               return;
             }
             const recaptchaValue = recaptchaRef.current!.getValue();
             console.log(recaptchaValue);
             if (!recaptchaValue) {
-              console.log("need cap 2 ", recaptchaValue);
+              //console.log("need cap 2 ", recaptchaValue);
               return;
             }
             addModo({
               variables: {
-                type: { nom: nom, server: serv, lastpos: pos, evt: action }
+                type: {
+                  nom: nom,
+                  server: serv,
+                  lastpos: pos,
+                  evt: action,
+                  origin: "Site"
+                }
               }
             });
-            console.log("ok");
+            //console.log("ok");
           }}
           size="tiny"
         >
@@ -89,24 +251,43 @@ const App: FunctionComponent = props => {
 
           <Grid centered columns={1}>
             <Grid.Column floated="left" width={6}>
-              <Form.Input
-                onChange={nomChange}
-                label="Nom du modérateur"
-                placeholder="Tiavos.. "
+              <strong>
+                Modérateur
+                <span style={{ color: "red" }}> *</span>
+              </strong>
+              <Dropdown
+                placeholder="Liste des modérateurs"
                 required
+                fluid
+                search
+                selection
+                options={modoList}
               />
-              <Form.Input
-                onChange={servChange}
-                label="Serveur"
-                placeholder="Ush/Oshimo.. "
+              <br />
+              <strong>
+                Serveur
+                <span style={{ color: "red" }}> *</span>
+              </strong>
+              <Dropdown
+                placeholder="Liste des serveurs"
+                fluid
+                selection
                 required
+                options={serverList}
               />
-              <Form.Input
-                onChange={actionChange}
-                label="Action"
-                placeholder="Ban/Mute.. "
+              <br />
+              <strong>
+                Action
+                <span style={{ color: "red" }}> *</span>
+              </strong>
+              <Dropdown
+                placeholder="Liste des actions"
+                fluid
+                selection
                 required
+                options={actionList}
               />
+              <br />
               <Form.Input
                 onChange={posChange}
                 label="Dernière position"
