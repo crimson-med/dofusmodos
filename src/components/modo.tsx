@@ -66,7 +66,7 @@ const Modo: FunctionComponent<IModoProps> = props => {
                 )
                 .map((m, k) => (
                   <Table.Row key={k}>
-                    <Table.Cell>{m.nom}</Table.Cell>
+                    <Table.Cell>{parseName(m.nom)}</Table.Cell>
                     <Table.Cell>{m.server}</Table.Cell>
                     <Table.Cell>{parsePos(m.lastpos)}</Table.Cell>
                     <Table.Cell>{m.evt}</Table.Cell>
@@ -76,7 +76,7 @@ const Modo: FunctionComponent<IModoProps> = props => {
                 ))}
               {props.addModo && (
                 <Table.Row>
-                  <Table.Cell>{props.addModo.server}</Table.Cell>
+                  <Table.Cell>{parseName(props.addModo.server)}</Table.Cell>
                   <Table.Cell>{props.addModo.nom}</Table.Cell>
                   <Table.Cell>{parsePos(props.addModo.lastpos)}</Table.Cell>
                   <Table.Cell>{props.addModo.evt}</Table.Cell>
@@ -97,23 +97,40 @@ const Modo: FunctionComponent<IModoProps> = props => {
 export default Modo;
 
 const parsePos = (data: string) => {
-  let pos = JSON.parse(data);
-  let final = "";
-  if (pos.area != undefined) {
-    final += `${pos.area}`;
-  }
-  if (pos.subArea != undefined) {
-    if (final != "") {
-      final += ` - ${pos.subArea}`;
-    } else {
-      final += ` ${pos.subArea}`;
+  try {
+    let pos = JSON.parse(data);
+    let final = "";
+    if (pos.area != undefined) {
+      final += `${pos.area}`;
     }
-  }
-  if (pos.posX != undefined && pos.posY != undefined) {
-    final += ` [${pos.posX};${pos.posY}]`;
-  }
-  if (final === "") {
+    if (pos.subArea != undefined) {
+      if (final != "") {
+        final += ` - ${pos.subArea}`;
+      } else {
+        final += ` ${pos.subArea}`;
+      }
+    }
+    if (pos.posX != undefined && pos.posY != undefined) {
+      final += ` [${pos.posX};${pos.posY}]`;
+    }
+    if (final === "") {
+      return data;
+    }
+    return final;
+  } catch (error) {
     return data;
   }
-  return final;
+};
+
+const parseName = (data: string) => {
+  try {
+    if (data.match("(])")) {
+      let final = data.replace("[", "");
+      return final.replace("]", "");
+    } else {
+      return data;
+    }
+  } catch (error) {
+    return data;
+  }
 };
