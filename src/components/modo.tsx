@@ -68,7 +68,7 @@ const Modo: FunctionComponent<IModoProps> = props => {
                   <Table.Row key={k}>
                     <Table.Cell>{m.nom}</Table.Cell>
                     <Table.Cell>{m.server}</Table.Cell>
-                    <Table.Cell>{m.lastpos}</Table.Cell>
+                    <Table.Cell>{parsePos(m.lastpos)}</Table.Cell>
                     <Table.Cell>{m.evt}</Table.Cell>
                     <Table.Cell>{moment(m.heure).fromNow()}</Table.Cell>
                     <Table.Cell>{m.origin}</Table.Cell>
@@ -78,7 +78,7 @@ const Modo: FunctionComponent<IModoProps> = props => {
                 <Table.Row>
                   <Table.Cell>{props.addModo.server}</Table.Cell>
                   <Table.Cell>{props.addModo.nom}</Table.Cell>
-                  <Table.Cell>{props.addModo.lastpos}</Table.Cell>
+                  <Table.Cell>{parsePos(props.addModo.lastpos)}</Table.Cell>
                   <Table.Cell>{props.addModo.evt}</Table.Cell>
                   <Table.Cell>
                     {moment(props.addModo.heure).fromNow()}
@@ -95,3 +95,25 @@ const Modo: FunctionComponent<IModoProps> = props => {
 };
 
 export default Modo;
+
+const parsePos = (data: string) => {
+  let pos = JSON.parse(data);
+  let final = "";
+  if (pos.area != undefined) {
+    final += `${pos.area}`;
+  }
+  if (pos.subArea != undefined) {
+    if (final != "") {
+      final += ` - ${pos.subArea}`;
+    } else {
+      final += ` ${pos.subArea}`;
+    }
+  }
+  if (pos.posX != undefined && pos.posY != undefined) {
+    final += ` [${pos.posX};${pos.posY}]`;
+  }
+  if (final === "") {
+    return data;
+  }
+  return final;
+};

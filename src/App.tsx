@@ -137,6 +137,16 @@ const modoList = [
     key: "Archelisle",
     value: "Archelisle",
     text: "Archelisle"
+  },
+  {
+    key: "Kramilium",
+    value: "Kramilium",
+    text: "Kramilium"
+  },
+  {
+    key: "Gowolik",
+    value: "Gowolik",
+    text: "Gowolik"
   }
 ];
 
@@ -272,7 +282,6 @@ const App: FunctionComponent = props => {
               </strong>
               <Dropdown
                 placeholder="Liste des modérateurs"
-                require
                 fluid
                 search
                 selection
@@ -288,7 +297,6 @@ const App: FunctionComponent = props => {
                 placeholder="Liste des serveurs"
                 fluid
                 selection
-                required
                 options={serverList}
                 onChange={servChange}
               />
@@ -301,7 +309,6 @@ const App: FunctionComponent = props => {
                 placeholder="Liste des actions"
                 fluid
                 selection
-                required
                 options={actionList}
                 onChange={actionChange}
               />
