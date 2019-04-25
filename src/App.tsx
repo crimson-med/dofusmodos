@@ -197,19 +197,19 @@ const App: FunctionComponent = props => {
     event: React.SyntheticEvent<HTMLElement, Event>,
     data: DropdownProps
   ) => {
-    setNom(data.value);
+    setNom(data.value as string);
   };
   const servChange = (
     event: React.SyntheticEvent<HTMLElement, Event>,
     data: DropdownProps
   ) => {
-    setServ(data.value);
+    setServ(data.value as string);
   };
   const actionChange = (
     event: React.SyntheticEvent<HTMLElement, Event>,
     data: DropdownProps
   ) => {
-    setAction(data.value);
+    setAction(data.value as string);
   };
   const posChange = (
     evt: React.ChangeEvent<HTMLInputElement>,
