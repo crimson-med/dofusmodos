@@ -70,7 +70,7 @@ const Modo: FunctionComponent<IModoProps> = props => {
                     <Table.Cell>{m.server}</Table.Cell>
                     <Table.Cell>{m.lastpos}</Table.Cell>
                     <Table.Cell>{m.evt}</Table.Cell>
-                    <Table.Cell>{m.heure}</Table.Cell>
+                    <Table.Cell>{moment(m.heure).fromNow()}</Table.Cell>
                     <Table.Cell>{m.origin}</Table.Cell>
                   </Table.Row>
                 ))}

@@ -272,7 +272,7 @@ const App: FunctionComponent = props => {
               </strong>
               <Dropdown
                 placeholder="Liste des modérateurs"
-                required
+                require
                 fluid
                 search
                 selection
