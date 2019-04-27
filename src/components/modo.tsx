@@ -9,8 +9,8 @@ import "moment/locale/fr";
 moment.locale("fr");
 
 const query = gql`
-  {
-    modos {
+  query Modos($afterDate: DateTime!) {
+    modos(afterDate: $afterDate)  {
       nom
       server
       lastpos
@@ -27,18 +27,18 @@ export interface IModoProps {
 
 const Modo: FunctionComponent<IModoProps> = props => {
   return (
-    <Query query={query}>
+    <Query query={query} variables={{afterDate: moment().subtract(1,"days").toDate().toISOString().slice(0,10)}}>
       {result => {
         if (result.loading)
           return (
             <Dimmer active inverted>
-              <Loader content="Loading" />
+              <Loader content="Chargement" />
             </Dimmer>
           );
         if (result.error)
           return (
             <Dimmer active inverted>
-              <Loader inverted content="Failed to fetch data" />
+              <Loader inverted content="Impossible de récupérer les données" />
             </Dimmer>
           );
         return (
@@ -54,6 +54,18 @@ const Modo: FunctionComponent<IModoProps> = props => {
               </Table.Row>
             </Table.Header>
             <Table.Body>
+              {props.addModo && (
+                <Table.Row>
+                  <Table.Cell>{parseName(props.addModo.server)}</Table.Cell>
+                  <Table.Cell>{props.addModo.nom}</Table.Cell>
+                  <Table.Cell>{parsePos(props.addModo.lastpos)}</Table.Cell>
+                  <Table.Cell>{props.addModo.evt}</Table.Cell>
+                  <Table.Cell>
+                    {moment(props.addModo.heure).fromNow()}
+                  </Table.Cell>
+                  <Table.Cell>{props.addModo.origin}</Table.Cell>
+                </Table.Row>
+              )}
               {(result.data.modos as IModo[])
                 .sort(
                   (a, b) =>
@@ -74,18 +86,6 @@ const Modo: FunctionComponent<IModoProps> = props => {
                     <Table.Cell>{m.origin}</Table.Cell>
                   </Table.Row>
                 ))}
-              {props.addModo && (
-                <Table.Row>
-                  <Table.Cell>{parseName(props.addModo.server)}</Table.Cell>
-                  <Table.Cell>{props.addModo.nom}</Table.Cell>
-                  <Table.Cell>{parsePos(props.addModo.lastpos)}</Table.Cell>
-                  <Table.Cell>{props.addModo.evt}</Table.Cell>
-                  <Table.Cell>
-                    {moment(props.addModo.heure).fromNow()}
-                  </Table.Cell>
-                  <Table.Cell>{props.addModo.origin}</Table.Cell>
-                </Table.Row>
-              )}
             </Table.Body>
           </Table>
         );
