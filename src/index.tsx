@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import { Row, Col } from 'antd';
 import * as serviceWorker from "./serviceWorker";
 import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
@@ -12,7 +13,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <Row>
+      <Col xs={{ span: 22, offset: 1 }}><App /></Col>
+    </Row> 
   </ApolloProvider>,
   document.getElementById("root")
 );

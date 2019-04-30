@@ -12,10 +12,12 @@ import {
   DropdownProps
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
+
 import ReCAPTCHA from "react-google-recaptcha";
 import Modo from "./components/modo";
 import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
+
 
 const addModoGql = gql`
   mutation AddModo($type: ModoInput!) {
@@ -52,6 +54,7 @@ const actionList = [
     text: "Mute"
   }
 ];
+
 const modoList = [
   {
     key: "Myghal",
@@ -264,79 +267,13 @@ const App: FunctionComponent = props => {
           }}
           size="tiny"
         >
-          <Image centered src="img/modo.png" size="small" />
 
-          <Grid centered columns={1}>
-            <Confirm
-              size="mini"
-              cancelButton="OK"
-              content="Veuillez vérifier le captcha"
-              open={open}
-              onCancel={cloze}
-              onConfirm={cloze}
-            />
-            <Grid.Column floated="left" width={6}>
-              <strong>
-                Modérateur
-                <span style={{ color: "red" }}> *</span>
-              </strong>
-              <Dropdown
-                placeholder="Liste des modérateurs"
-                fluid
-                search
-                selection
-                options={modoList}
-                onChange={nomChange}
-              />
-              <br />
-              <strong>
-                Serveur
-                <span style={{ color: "red" }}> *</span>
-              </strong>
-              <Dropdown
-                placeholder="Liste des serveurs"
-                fluid
-                selection
-                options={serverList}
-                onChange={servChange}
-              />
-              <br />
-              <strong>
-                Action
-                <span style={{ color: "red" }}> *</span>
-              </strong>
-              <Dropdown
-                placeholder="Liste des actions"
-                fluid
-                selection
-                options={actionList}
-                onChange={actionChange}
-              />
-              <br />
-              <Form.Input
-                onChange={posChange}
-                label="Dernière position"
-                placeholder="Bonta/Brak.. "
-                required
-              />
-              <Grid>
-                <Grid.Row>
-                  <Grid.Column width={4}>
-                    <Button type="submit">Partager</Button>
-                  </Grid.Column>
-                  <Grid.Column width={8}>
-                    <ReCAPTCHA
-                      ref={recaptchaRef}
-                      sitekey="6Ldp44kUAAAAAGmacWivKV8_xX0GJaH0RkzOy4QW"
-                    />
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Grid.Column>
-            <Grid.Column floated="right" width={10}>
+        
+     
+
+          
               <Modo addModo={data && data.addModo} />
-            </Grid.Column>
-          </Grid>
+
         </Form>
       )}
     </Mutation>
