@@ -133,14 +133,14 @@ const App: FunctionComponent = props => {
         <Form
           onSubmit={e => {
             e.preventDefault();
-            if (!recaptchaRef || (recaptchaRef && !recaptchaRef.current)) {
+            /*if (!recaptchaRef || (recaptchaRef && !recaptchaRef.current)) {
               return;
             }
             const recaptchaValue = recaptchaRef.current!.getValue();
             console.log(recaptchaValue);
             if (!recaptchaValue) {
               return;
-            }
+          }*/
             let lastposition = {area: area, subArea: subArea, posX: pos.posX, posY: pos.posY};
             if (pos.posX === 99999 && pos.posY === 99999) {
                 lastposition.posX = null as any;
@@ -160,7 +160,7 @@ const App: FunctionComponent = props => {
           }}
           size="tiny"
         >
-          <Image centered src="img/modo.png" size="small" />
+          <Image centered class="App-logo" src="img/modo2.png" />
           <Grid centered columns={1}>
             <Confirm
               size="mini"
@@ -182,6 +182,7 @@ const App: FunctionComponent = props => {
                 selection
                 options={modoList}
                 onChange={nomChange}
+                required
               />
               <br />
               <strong>
@@ -194,6 +195,8 @@ const App: FunctionComponent = props => {
                 selection
                 options={serverList}
                 onChange={servChange}
+                required
+
               />
               <br />
               <strong>
@@ -206,6 +209,8 @@ const App: FunctionComponent = props => {
                 selection
                 options={actionList}
                 onChange={actionChange}
+                required
+
               />
               <br />
               <strong>
@@ -236,9 +241,12 @@ const App: FunctionComponent = props => {
                 required
               />
               <br />
+              <strong>
+                Coordonnées
+                <span style={{ color: "red" }}> *</span>
+              </strong>
               <Form.Input
                 onChange={posChange}
-                label="Coordonnées"
                 placeholder="12,-4"
               />
               <span style={{ color: isPosOk.color }}>{isPosOk.text}</span>

@@ -3,11 +3,33 @@ body {
   text-align: center;
   padding-left: 30px;
   padding-right: 30px;
+  background-color: #353535 !important;
 }
+
+strong{
+    color: #ED5338;
+}
+.ui.form .field > label {
+    color: #ED5338;
+}
+button{
+    color: #353535 !important;
+    background-color: #ED5338 !important;
+}
+button:hover{
+    color: #353535 !important;
+
+    background-color: #c4452f !important;
+}
+button:active {
+    color: #FFFFFF !important;
+    background-color: #933524 !important;
+}
+
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  width: 400px;
 }
 
 .App-header {
