@@ -16,6 +16,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Modo from "./components/modo";
 import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
+import config from "./config";
 
 const addModoGql = gql`
   mutation AddModo($type: ModoInput!) {
@@ -29,177 +30,23 @@ const addModoGql = gql`
     }
   }
 `;
-
-const actionList = [
-  {
-    key: "Ban",
-    value: "Ban",
-    text: "Ban"
-  },
-  {
-    key: "MP",
-    value: "MP",
-    text: "Message"
-  },
-  {
-    key: "OnMap",
-    value: "OnMap",
-    text: "OnMap"
-  },
-  {
-    key: "Mute",
-    value: "Mute",
-    text: "Mute"
-  }
-];
-const modoList = [
-  {
-    key: "Myghal",
-    value: "Myghal",
-    text: "Myghal"
-  },
-  {
-    key: "Zesnow",
-    value: "Zesnow",
-    text: "Zesnow"
-  },
-  {
-    key: "Tiavos",
-    value: "Tiavos",
-    text: "Tiavos"
-  },
-  {
-    key: "Fiora",
-    value: "Fiora",
-    text: "Fiora"
-  },
-  {
-    key: "TobliK",
-    value: "TobliK",
-    text: "TobliK"
-  },
-  {
-    key: "Amun",
-    value: "Amun",
-    text: "Amun"
-  },
-  {
-    key: "Nyom",
-    value: "Nyom",
-    text: "Nyom"
-  },
-  {
-    key: "Flysthos",
-    value: "Flysthos",
-    text: "Flysthos"
-  },
-  {
-    key: "Fuhrgrim",
-    value: "Fuhrgrim",
-    text: "Fuhrgrim"
-  },
-  {
-    key: "Sionilam",
-    value: "Sionilam",
-    text: "Sionilam"
-  },
-  {
-    key: "Loalys",
-    value: "Loalys",
-    text: "Loalys"
-  },
-  {
-    key: "Aesylthia",
-    value: "Aesylthia",
-    text: "Aesylthia"
-  },
-  {
-    key: "Luzagal",
-    value: "Luzagal",
-    text: "Luzagal"
-  },
-  {
-    key: "Falgoryn",
-    value: "Falgoryn",
-    text: "Falgoryn"
-  },
-  {
-    key: "Luzark",
-    value: "Luzark",
-    text: "Luzark"
-  },
-  {
-    key: "Mibato",
-    value: "Mibato",
-    text: "Mibato"
-  },
-  {
-    key: "Archelisle",
-    value: "Archelisle",
-    text: "Archelisle"
-  },
-  {
-    key: "Kramilium",
-    value: "Kramilium",
-    text: "Kramilium"
-  },
-  {
-    key: "Gowolik",
-    value: "Gowolik",
-    text: "Gowolik"
-  }
-];
-
-const serverList = [
-  {
-    key: "Oshimo",
-    text: "Oshimo",
-    value: "Oshimo",
-    image:
-      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_403.png"
-  },
-  {
-    key: "Terra Cogita",
-    text: "Terra Cogita",
-    value: "Terra Cogita",
-    image:
-      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_404.png"
-  },
-  {
-    key: "Grandapan",
-    text: "Grandapan",
-    value: "Grandapan",
-    image:
-      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_401.png"
-  },
-  {
-    key: "Herdegrize",
-    text: "Herdegrize",
-    value: "Herdegrize",
-    image:
-      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_405.png"
-  },
-  {
-    key: "Brutas",
-    text: "Brutas",
-    value: "Brutas",
-    image:
-      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_407.png"
-  },
-  {
-    key: "Dodge",
-    text: "Dodge",
-    value: "Dodge",
-    image:
-      "https://ankama.akamaized.net/games/dofus-tablette/assets/2.26.1_X1dx.X2e_yPlG7RRneyLq2ohaL%27U28kN/gfx/illus/illu_406.png"
-  }
-];
-
+const actionList = config.reasons;
+const modoList = config.modos;
+const serverList = config.servers;
+const areaList = config.areas.map(a => {
+    return {key: a.name, value: a.name, text: a.name}
+});
+const subAreaList = config.subAreas.map(a => {
+    return {key: a.name, value: a.name, text: a.name}
+});
 const App: FunctionComponent = props => {
   const [nom, setNom] = useState("");
   const [serv, setServ] = useState("");
+  const [isPosOk, setIsPosOk] = useState({color: "red", text: ""});
   const [action, setAction] = useState("");
-  const [pos, setPos] = useState("");
+  const [area, setArea] = useState(areaList[areaList.length - 1].value);
+  const [subArea, setSubArea] = useState("");
+  const [pos, setPos] = useState({posX: 0, posY:0});
   const [open, setOpen] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
@@ -221,11 +68,58 @@ const App: FunctionComponent = props => {
   ) => {
     setAction(data.value as string);
   };
+  const areaChange = (
+    event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownProps
+  ) => {
+    const ar = config.areas.filter(e => e.name == data.value);
+    setArea(data.value as string);
+  };
+  const subAreaChange = (
+    event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownProps
+  ) => {
+    // find our sub area
+    const sub = config.subAreas.filter(e => e.name == data.value);
+    // if we have found our sub area
+    if (sub && sub.length > 0) {
+        // Try to find the Master Area
+        const ar = config.areas.filter(e => e.id == sub[0].areaId);
+        // If we found the Master Area update it accordingly
+        if  (ar && ar.length > 0) {
+            setArea(ar[0].name as string);
+        } else {
+            // Set to unknown if can't recover Master Area
+            setArea(config.areas[config.areas.length-1].name as string);
+        }
+    }
+    setSubArea(data.value as string);
+  };
   const posChange = (
     evt: React.ChangeEvent<HTMLInputElement>,
     data: InputOnChangeData
   ) => {
-    setPos(data.value);
+      // Perfect coordinate regex
+      let coord = data.value.match(/((\S?\d+)(,|;)(\S?\d+))/);
+      let co = [];
+      if (coord) {
+          for (var i = 0; i < coord.length; i++) {
+              // only keep matches which are numbers
+              // we use as any because TS compiler can be to aggressive
+              if (!isNaN(coord[i] as any)) {
+                  co.push(coord[i]);
+              }
+          }
+      }
+      if (co.length == 2) {
+          // We have our X & Y, update the state
+          setPos({...pos, posX: Number(co[0]), posY: Number(co[1])});
+          // Update visual help for noobs
+          setIsPosOk({...isPosOk, color: "green", text: "Position is valid"});
+      } else {
+          // Reminding noobs of format
+          setIsPosOk({...isPosOk, color: "red", text: "Position is in-valid. Leave blank or follow the format: 34,-4"});
+      }
   };
   const cloze = (
     evt: React.MouseEvent<HTMLAnchorElement>,
@@ -313,12 +207,41 @@ const App: FunctionComponent = props => {
                 onChange={actionChange}
               />
               <br />
-              <Form.Input
-                onChange={posChange}
-                label="Dernière position"
-                placeholder="Bonta/Brak.. "
+              <strong>
+                Area
+                <span style={{ color: "red" }}> *</span>
+              </strong>
+              <Dropdown
+                placeholder="Area"
+                fluid
+                selection
+                options={areaList}
+                onChange={areaChange}
+                value = {area}
                 required
               />
+              <br />
+              <strong>
+                Sub Area
+                <span style={{ color: "red" }}> *</span>
+              </strong>
+              <Dropdown
+                placeholder="Sub Area"
+                fluid
+                selection
+                options={subAreaList}
+                onChange={subAreaChange}
+                defaultValue={subAreaList[subAreaList.length - 1].value}
+                required
+              />
+              <br />
+              <Form.Input
+                onChange={posChange}
+                label="Coordonnées"
+                placeholder="12,-4"
+              />
+              <span style={{ color: isPosOk.color }}>{isPosOk.text}</span>
+              <hr />
               <Grid>
                 <Grid.Row>
                   <Grid.Column width={4}>
