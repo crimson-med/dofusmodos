@@ -46,7 +46,7 @@ const App: FunctionComponent = props => {
   const [action, setAction] = useState("");
   const [area, setArea] = useState(areaList[areaList.length - 1].value);
   const [subArea, setSubArea] = useState("");
-  const [pos, setPos] = useState({posX: 0, posY:0});
+  const [pos, setPos] = useState({posX: 99999, posY:99999});
   const [open, setOpen] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
@@ -134,32 +134,33 @@ const App: FunctionComponent = props => {
           onSubmit={e => {
             e.preventDefault();
             if (!recaptchaRef || (recaptchaRef && !recaptchaRef.current)) {
-              //console.log("need cap");
               return;
             }
             const recaptchaValue = recaptchaRef.current!.getValue();
             console.log(recaptchaValue);
             if (!recaptchaValue) {
-              //console.log("need cap 2 ", recaptchaValue);
               return;
+            }
+            let lastposition = {area: area, subArea: subArea, posX: pos.posX, posY: pos.posY};
+            if (pos.posX === 99999 && pos.posY === 99999) {
+                lastposition.posX = null as any;
+                lastposition.posY = null as any;
             }
             addModo({
               variables: {
                 type: {
                   nom: nom,
                   server: serv,
-                  lastpos: pos,
+                  lastpos: JSON.stringify(lastposition),
                   evt: action,
                   origin: "Site"
                 }
               }
             });
-            //console.log("ok");
           }}
           size="tiny"
         >
           <Image centered src="img/modo.png" size="small" />
-
           <Grid centered columns={1}>
             <Confirm
               size="mini"
