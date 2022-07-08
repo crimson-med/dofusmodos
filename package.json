@@ -10,7 +10,7 @@
     "@types/react-google-recaptcha": "^0.10.0",
     "apollo-boost": "^0.1.23",
     "graphql": "^14.0.2",
-    "moment": "^2.23.0",
+    "moment": "^2.29.4",
     "react": "^16.8.0-alpha.0",
     "react-apollo": "^2.3.3",
     "react-dom": "^16.8.0-alpha.0",
